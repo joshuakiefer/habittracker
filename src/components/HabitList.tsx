@@ -35,6 +35,12 @@ export default function HabitList({ habits, onHabitsChange }: HabitListProps) {
     onHabitsChange(updatedHabits);
   };
 
+  const deleteHabit = async (habitId: string) => {
+    const updatedHabits = habits.filter(habit => habit.id !== habitId);
+    await saveHabits(updatedHabits);
+    onHabitsChange(updatedHabits);
+  };
+
   const calculateStreak = (dates: string[]): number => {
     if (dates.length === 0) return 0;
     
@@ -63,6 +69,7 @@ export default function HabitList({ habits, onHabitsChange }: HabitListProps) {
           <HabitItem
             habit={item}
             onToggle={() => toggleHabit(item.id)}
+            onDelete={() => deleteHabit(item.id)}
           />
         )}
       />
